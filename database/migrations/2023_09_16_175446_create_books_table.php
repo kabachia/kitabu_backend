@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-	    $table->id('ISBN');
-            $table->string('name')
-	    $table->foreignIdFor(Author::class)
+	    $table->unsignedBigInteger('ISBN')->primary();
+            $table->string('name');
+	    $table->foreignIdFor(App\Models\Author::class)
 	          ->constrained()
 		  ->onUpdate('cascade')
 		  ->onDelete('restrict');

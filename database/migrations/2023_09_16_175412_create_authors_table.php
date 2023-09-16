@@ -12,12 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('authors', function (Blueprint $table) {
-	    $table->increments('id');
-            $table->string('first_name')
-            $table->string('middle_name')
-	    $table->string('last_name')
-	    $table->longText('biography')
-	    $table->string('email')
+	    $table->id();
+            $table->string('first_name');
+            $table->string('middle_name');
+	    $table->string('last_name');
+	    $table->longText('biography');
+	    $table->string('email');
             $table->timestamps();
         });
     }
