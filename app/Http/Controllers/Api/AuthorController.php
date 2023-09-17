@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAuthorRequest;
+use App\Http\Resources\AuthorResource;
 
 class AuthorController extends Controller
 {
@@ -12,7 +15,8 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+       $authors = Author::all();
+       return AuthorResource::collection($authors);
     }
 
     /**
@@ -26,17 +30,22 @@ class AuthorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAuthorRequest $request)
     {
-        //
+	$authors = Author::create($request->all());
+
+        return new AuthorResource($authors);
+
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Author $author)
+    public function show($id)
     {
-        //
+	$author = Author::where('id',$id)->get();
+	return $author;
     }
 
     /**
@@ -50,9 +59,12 @@ class AuthorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Author $author)
+    public function update(Request $request, $id)
     {
-        //
+	$author = Author::where('id',$id)->get();
+	$author->update($request->all());
+
+	return new AuthorResource($author); 
     }
 
     /**
@@ -60,6 +72,8 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+	//$author->delete();
+
+        //return response(null,204);
     }
 }
